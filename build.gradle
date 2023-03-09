@@ -18,7 +18,7 @@ repositories {
 }
 
 dependencies {
-compileOnly "io.papermc.paper:paper-api:1.19.3-R0.1-SNAPSHOT"
+    compileOnly "io.papermc.paper:paper-api:1.19.3-R0.1-SNAPSHOT"
 }
 
 def targetJavaVersion = 17
@@ -35,6 +35,10 @@ tasks.withType(JavaCompile).configureEach {
     if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
         options.release = targetJavaVersion
     }
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
 }
 
 processResources {
