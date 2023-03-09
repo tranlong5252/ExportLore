@@ -1,0 +1,12 @@
+name: ExportLore
+version: '1.0'
+authors: [ tranlong5252 ] #hoặc author: tranlong5252
+main: tranlong5252.exportlore.ExportLore
+description: Export lore of the item in main hand
+api-version: 1.19
+
+commands:
+  exportlore:
+    description: Export lore of the item in main hand
+    usage: /exportlore <filename>
+    permission: exportlore.use
