@@ -11,10 +11,10 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class CommandMain implements CommandExecutor {
+
 	@Override
 	public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
 		if (!(sender instanceof Player player)) return true;
@@ -28,7 +28,6 @@ public class CommandMain implements CommandExecutor {
 			player.sendMessage("§cYou must hold an item in your hand!");
 			return true;
 		}
-
 		ItemMeta meta = item.getItemMeta();
 		if (meta == null || !meta.hasLore()) {
 			player.sendMessage("§cThis item has no lore!");
@@ -39,18 +38,14 @@ public class CommandMain implements CommandExecutor {
 			player.sendMessage("§cThis item has no lore!");
 			return true;
 		}
-		List<String> ok = new ArrayList<>(lore);
-		ok.replaceAll(s -> s.replace("§", "&"));
-		for (String s : ok) {
-			player.sendMessage(s);
-		}
+		lore.replaceAll(s -> s.replace("§", "&"));
 		File file = new File(ExportLore.getInstance().getDataFolder(), args[0] + ".yml");
 		YamlConfiguration yaml = YamlConfiguration.loadConfiguration(file);
 		yaml.set("display_name", meta.getDisplayName().replace("§", "&"));
 		yaml.set("material", item.getType().name());
 		yaml.set("amount", item.getAmount());
 		if (meta.hasCustomModelData()) yaml.set("model_data", meta.getCustomModelData());
-		yaml.set("lore", ok);
+		yaml.set("lore", lore);
 		try {
 			yaml.save(file);
 		} catch (IOException e) {
